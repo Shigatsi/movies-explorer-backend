@@ -44,9 +44,15 @@ const deleteMovieById = (req, res, next) => {
         throw new NotFoundErr(`Фильм с id${req.params.id} не найдена`);
       }
       if (card.owner.toString() !== req.user._id) {
-        throw new ForbidenErr('Удалить фильм может только автор карточки');
+        throw new ForbidenErr('Удалить может только тот кто добавил фильм');
       }
       return res.send({ data: movie });
     })
     .catch(next);
+};
+
+module.exports = {
+  getUsersMovies,
+  createMovie,
+  deleteMovieById
 };
