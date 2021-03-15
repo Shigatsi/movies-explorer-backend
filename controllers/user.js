@@ -39,12 +39,12 @@ const login  = (req, res, next) => {
 };
 
 const getCurrentUser = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.params.id)
     .then((user) => {
       if (user) {
         return res.send({ data: user });
       }
-      throw new NotFoundErr('Пользователь не найден');
+      throw new NotFoundErr(`Пользователь ${req.params.id} не найден`);
     })
     .catch(next);
 };

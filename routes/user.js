@@ -4,7 +4,7 @@ const { createUser, login, getCurrentUser, updateUserProfile } = require('../con
 
 router.post('/signin', login);
 router.post('/signup', createUser);
-router.get('/users/me', getCurrentUser); //возвращает информацию о пользователе (email и имя)
+router.get('/users/:id', getCurrentUser); //возвращает информацию о пользователе (email и имя)
 router.patch('/users/me', updateUserProfile); // обновляет информацию о пользователе (email и имя)
 
 module.exports = router;
