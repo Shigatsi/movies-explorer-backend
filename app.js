@@ -5,9 +5,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-app.get('/', (req,res) => {
-  res.send('ITS ALIVE!')
-})
+const routes = require('./routes/index');
+const errorHandler = require('./middlwares/errorHandler');
+
+// app.get('/', (req,res) => {
+//   res.send('ITS ALIVE!')
+// })
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
@@ -16,6 +22,8 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 
+app.use(routes);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
