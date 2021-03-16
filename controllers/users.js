@@ -57,7 +57,7 @@ const updateUserProfile = (req, res, next) => {
       if (name && email) {
         return res.send({ data: user });
       }
-      throw new BadRequestErr(errorMessages[400]['updateProfile']);
+      throw new BadRequestErr(errorMessages[400]['validateErr']);
     })
     .catch(next);
 };
