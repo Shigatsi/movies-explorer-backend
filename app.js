@@ -1,16 +1,13 @@
 const express = require ('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
 
 const routes = require('./routes/index');
 const errorHandler = require('./middlwares/errorHandler');
-
-// app.get('/', (req,res) => {
-//   res.send('ITS ALIVE!')
-// })
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

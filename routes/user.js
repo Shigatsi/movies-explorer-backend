@@ -1,10 +1,12 @@
 const router = require('express').Router();
 
-const { createUser, login, getCurrentUser, updateUserProfile } = require('../controllers/user')
+const authMiddleware = require('../middlwares/auth');
+const { validateLogin, validateUser } = require('../middlwares/validators');
+const { createUser, login, getCurrentUser, updateUserProfile } = require('../controllers/users')
 
-router.post('/signin', login);
-router.post('/signup', createUser);
-router.get('/users/:id', getCurrentUser); //возвращает информацию о пользователе (email и имя)
-router.patch('/users/me', updateUserProfile); // обновляет информацию о пользователе (email и имя)
+router.post('/signin', validateLogin, login);
+router.post('/signup', validateUser, createUser);
+router.get('/users/:id', authMiddleware, getCurrentUser); //возвращает информацию о пользователе (email и имя)
+router.patch('/users/me', authMiddleware, updateUserProfile); // обновляет информацию о пользователе (email и имя)
 
 module.exports = router;
