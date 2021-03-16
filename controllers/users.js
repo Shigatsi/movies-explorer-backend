@@ -1,19 +1,19 @@
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
 const User = require('../models/user');
-const errorMessages= require('../utils/errorMessages.js');
+const errorMessages = require('../utils/errorMessages.js');
 
 const { JWT_SECRET } = process.env;
 const {
-  NotFoundErr, ConflictErr, BadRequestErr, InternalServerErr,
+  NotFoundErr, ConflictErr, BadRequestErr,
 } = require('../errors/index');
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
   User.findOne({ email })
-    .then((user)=> {
-      if(user) {
-        throw new ConflictErr(errorMessages[409]['email']);
+    .then((user) => {
+      if (user) {
+        throw new ConflictErr(errorMessages[409].email);
       }
       return bcrypt.hash(password, 10);
     })
@@ -22,17 +22,17 @@ const createUser = (req, res, next) => {
       name,
       password: hash,
     }))
-    .then(()=> res.send({
-      email, name
+    .then(() => res.send({
+      email, name,
     }))
     .catch(next);
 };
 
-const login  = (req, res, next) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
-    .then((user)=> {
+    .then((user) => {
       const token = jwt.sign({ _id: user.id }, JWT_SECRET, { expiresIn: '1h' });
       return res.send({ token });
     })
@@ -45,7 +45,7 @@ const getCurrentUser = (req, res, next) => {
       if (user) {
         return res.send({ data: user });
       }
-      throw new NotFoundErr(errorMessages[404]['user']);
+      throw new NotFoundErr(errorMessages[404].user);
     })
     .catch(next);
 };
@@ -57,7 +57,7 @@ const updateUserProfile = (req, res, next) => {
       if (name && email) {
         return res.send({ data: user });
       }
-      throw new BadRequestErr(errorMessages[400]['validateErr']);
+      throw new BadRequestErr(errorMessages[400].validateErr);
     })
     .catch(next);
 };
@@ -66,5 +66,5 @@ module.exports = {
   createUser,
   login,
   getCurrentUser,
-  updateUserProfile
-}
+  updateUserProfile,
+};

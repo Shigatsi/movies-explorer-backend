@@ -1,4 +1,4 @@
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const validator = require('validator');
 const { UnauthorizedErr } = require('../errors/index');
@@ -15,14 +15,14 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false
+    select: false,
   },
   name: {
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30
-  }
+    maxlength: 30,
+  },
 });
 
 userSchema.statics.findUserByCredentials = function (email, password) {

@@ -4,9 +4,9 @@ const errorMessages = require('../utils/errorMessages');
 
 const getUsersMovies = (req, res) => {
   Movie.find({ owner: req.user._id })
-    .then((movies)=>  res.send({ data: movies }))
-    .catch(() => res.status(500).send({ message: errorMessages[500]['server'] }));
-}
+    .then((movies) => res.send({ data: movies }))
+    .catch(() => res.status(500).send({ message: errorMessages[500].server }));
+};
 
 const createMovie = (req, res, next) => {
   console.log('req.user', req.user);
@@ -21,7 +21,7 @@ const createMovie = (req, res, next) => {
     movieId,
     nameRU,
     nameEN,
-    thumbnail
+    thumbnail,
   } = req.body;
   Movie.create({
     country,
@@ -35,7 +35,7 @@ const createMovie = (req, res, next) => {
     nameRU,
     nameEN,
     thumbnail,
-    owner: req.user._id
+    owner: req.user._id,
   })
     .then((movie) => res.send({ data: movie }))
     .catch(next);
@@ -45,10 +45,10 @@ const deleteMovieById = (req, res, next) => {
   Movie.findByIdAndRemove(req.params.movieId)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundErr(errorMessages[404]['film']);
+        throw new NotFoundErr(errorMessages[404].film);
       }
       if (movie.owner.toString() !== req.user._id) {
-        throw new ForbidenErr(errorMessages[403]['film']);
+        throw new ForbidenErr(errorMessages[403].film);
       }
       return res.send({ data: movie });
     })
@@ -58,5 +58,5 @@ const deleteMovieById = (req, res, next) => {
 module.exports = {
   getUsersMovies,
   createMovie,
-  deleteMovieById
+  deleteMovieById,
 };

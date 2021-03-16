@@ -3,11 +3,10 @@ const userRoutes = require('./user');
 const movieRoutes = require('./movie');
 const errorRouter = require('./error');
 
-
 const routes = router.use(
   userRoutes,
   movieRoutes,
-  errorRouter
+  errorRouter,
 );
 
 module.exports = routes;

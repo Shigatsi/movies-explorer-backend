@@ -4,7 +4,7 @@ const errorMessages = require('../utils/errorMessages');
 
 // eslint-disable-next-line
 router.all('/*', (req, res) => {
-  throw new NotFoundErr(errorMessages[404]['resource']);
+  throw new NotFoundErr(errorMessages[404].resource);
 });
 
 module.exports = router;
