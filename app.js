@@ -9,6 +9,7 @@ const app = express();
 const PORT = 3000;
 
 const routes = require('./routes/index');
+const limiter = require('./middlwares/limiter');
 const errorHandler = require('./middlwares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlwares/logger');
 const allowedCors = require('./utils/const');
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
