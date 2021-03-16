@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
 const User = require('../models/user');
+const errorMessages= require('../utils/errorMessages.js');
 
 const { JWT_SECRET } = process.env;
 const {
@@ -12,7 +13,7 @@ const createUser = (req, res, next) => {
   User.findOne({ email })
     .then((user)=> {
       if(user) {
-        throw new ConflictErr('Email уже используется');
+        throw new ConflictErr(errorMessages[409]['email']);
       }
       return bcrypt.hash(password, 10);
     })
@@ -30,7 +31,7 @@ const createUser = (req, res, next) => {
 const login  = (req, res, next) => {
   const { email, password } = req.body;
 
-  return User.findByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user)=> {
       const token = jwt.sign({ _id: user.id }, JWT_SECRET, { expiresIn: '1h' });
       return res.send({ token });
@@ -44,7 +45,7 @@ const getCurrentUser = (req, res, next) => {
       if (user) {
         return res.send({ data: user });
       }
-      throw new NotFoundErr(`Пользователь ${req.params.id} не найден`);
+      throw new NotFoundErr(errorMessages[404]['user']);
     })
     .catch(next);
 };
@@ -56,7 +57,7 @@ const updateUserProfile = (req, res, next) => {
       if (name && email) {
         return res.send({ data: user });
       }
-      throw new BadRequestErr('Переданы некорректные данные');
+      throw new BadRequestErr(errorMessages[400]['updateProfile']);
     })
     .catch(next);
 };

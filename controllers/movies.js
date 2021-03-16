@@ -1,13 +1,15 @@
 const Movie = require('../models/movie');
 const { NotFoundErr, ForbidenErr } = require('../errors/index');
+const errorMessages = require('../utils/errorMessages');
 
 const getUsersMovies = (req, res) => {
   Movie.find({ owner: req.user._id })
     .then((movies)=>  res.send({ data: movies }))
-    .catch(() => res.status(500).send({ message: 'На сервере произошла ошибка' }));
+    .catch(() => res.status(500).send({ message: errorMessages[500]['server'] }));
 }
 
-const createMovie = (req, res) => {
+const createMovie = (req, res, next) => {
+  console.log('req.user', req.user);
   const {
     country,
     director,
@@ -16,11 +18,12 @@ const createMovie = (req, res) => {
     description,
     image,
     trailer,
+    movieId,
     nameRU,
     nameEN,
     thumbnail
   } = req.body;
-  Card.create({
+  Movie.create({
     country,
     director,
     duration,
@@ -28,6 +31,7 @@ const createMovie = (req, res) => {
     description,
     image,
     trailer,
+    movieId,
     nameRU,
     nameEN,
     thumbnail,
@@ -38,13 +42,13 @@ const createMovie = (req, res) => {
 };
 
 const deleteMovieById = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params.id)
+  Movie.findByIdAndRemove(req.params.movieId)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundErr(`Фильм с id${req.params.id} не найдена`);
+        throw new NotFoundErr(errorMessages[404]['film']);
       }
-      if (card.owner.toString() !== req.user._id) {
-        throw new ForbidenErr('Удалить может только тот кто добавил фильм');
+      if (movie.owner.toString() !== req.user._id) {
+        throw new ForbidenErr(errorMessages[403]['film']);
       }
       return res.send({ data: movie });
     })
