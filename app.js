@@ -9,7 +9,7 @@ const app = express();
 const PORT = 3000;
 
 const routes = require('./routes/index');
-const limiter = require('./middlwares/limiter');
+// const limiter = require('./middlwares/limiter');
 const errorHandler = require('./middlwares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlwares/logger');
 const allowedCors = require('./utils/const');
