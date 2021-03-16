@@ -9,6 +9,7 @@ const PORT = 3000;
 
 const routes = require('./routes/index');
 const errorHandler = require('./middlwares/errorHandler');
+const { requestLogger, errorLogger } = require('./middlwares/logger');
 const allowedCors = require('./utils/const');
 
 app.use(cors());
@@ -34,7 +35,9 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 
+app.use(requestLogger);
 app.use(routes);
+app.use(errorLogger);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
