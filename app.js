@@ -17,7 +17,7 @@ const allowedCors = require('./utils/const');
 app.use(cors());
 app.use((req, res, next) => {
   const { origin } = req.headers; // Записываем в переменную origin соответствующий заголовок
-
+  console.log(`allowedCors`, allowedCors);
   if (allowedCors.includes(origin)) {
     // Проверяем, что значение origin есть среди разрешённых доменов
     res.header('Access-Control-Allow-Origin', origin);

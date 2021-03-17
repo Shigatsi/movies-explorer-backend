@@ -1,4 +1,4 @@
-module.exports.allowedCors = [
+module.exports = [
   'localhost:3000',
   'http://shigatsimovie.students.nomoredomains.icu',
   'http://www.shigatsimovie.students.nomoredomains.icu',
