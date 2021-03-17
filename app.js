@@ -9,7 +9,7 @@ const app = express();
 const PORT = 3000;
 
 const routes = require('./routes/index');
-// const limiter = require('./middlwares/limiter');
+const limiter = require('./middlwares/limiter');
 const errorHandler = require('./middlwares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlwares/logger');
 const allowedCors = require('./utils/const');
@@ -17,7 +17,7 @@ const allowedCors = require('./utils/const');
 app.use(cors());
 app.use((req, res, next) => {
   const { origin } = req.headers; // Записываем в переменную origin соответствующий заголовок
-  console.log(`allowedCors`, allowedCors);
+
   if (allowedCors.includes(origin)) {
     // Проверяем, что значение origin есть среди разрешённых доменов
     res.header('Access-Control-Allow-Origin', origin);
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(limiter);
+app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
