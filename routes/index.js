@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const userRoutes = require('./user');
 const movieRoutes = require('./movie');
-const errorRouter = require('./error');
+const errorRouter = require('./default');
 
 const routes = router.use(
   userRoutes,
