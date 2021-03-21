@@ -2,10 +2,10 @@ const Movie = require('../models/movie');
 const { NotFoundErr, ForbidenErr } = require('../errors/index');
 const errorMessages = require('../utils/errorMessages');
 
-const getUsersMovies = (req, res) => {
+const getUsersMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
     .then((movies) => res.send({ data: movies }))
-    .catch(() => res.status(500).send({ message: errorMessages[500].server }));
+    .catch(next);
 };
 
 const createMovie = (req, res, next) => {
