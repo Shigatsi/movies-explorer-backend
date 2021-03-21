@@ -29,6 +29,19 @@ const validateLogin = celebrate({
   })),
 });
 
+const validateUpdateUser = celebrate({
+  body: Joi.object().keys(({
+    name: Joi.string().min(2).max(30).messages({
+      'string.max': errorMessages[400].max,
+      'string.min': errorMessages[400].minTwo,
+    }),
+    email: Joi.string().required().custom(validateEmail).messages({
+      'any.required': 'Обязательное поле',
+    }),
+  })),
+});
+
+
 const validateUser = celebrate({
   body: Joi.object().keys(({
     name: Joi.string().min(2).max(30).messages({
@@ -61,8 +74,16 @@ const validateMovie = celebrate({
   })),
 });
 
+const validateDeleteMovie = celebrate({
+  body: Joi.object().keys(({
+    movieId: Joi.string().required().hex().length(24),
+  })),
+});
+
 module.exports = {
   validateLogin,
+  validateUpdateUser,
   validateUser,
   validateMovie,
+  validateDeleteMovie
 };
