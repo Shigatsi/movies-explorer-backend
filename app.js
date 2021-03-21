@@ -6,7 +6,7 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const {PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb'} = process.env;
 
 const routes = require('./routes/index');
 const limiter = require('./middlwares/limiter');
@@ -31,7 +31,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect( MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -45,6 +45,4 @@ app.use(errorLogger);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`App listen on port ${PORT}`);
 });
