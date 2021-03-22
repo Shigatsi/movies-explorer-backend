@@ -31,7 +31,7 @@ const validateLogin = celebrate({
 
 const validateUpdateUser = celebrate({
   body: Joi.object().keys(({
-    name: Joi.string().min(2).max(30).messages({
+    name: Joi.string().min(2).max(30).required().messages({
       'string.max': errorMessages[400].max,
       'string.min': errorMessages[400].minTwo,
     }),
@@ -43,7 +43,7 @@ const validateUpdateUser = celebrate({
 
 const validateUser = celebrate({
   body: Joi.object().keys(({
-    name: Joi.string().min(2).max(30).messages({
+    name: Joi.string().min(2).max(30).required().messages({
       'string.max': errorMessages[400].max,
       'string.min': errorMessages[400].minTwo,
     }),
