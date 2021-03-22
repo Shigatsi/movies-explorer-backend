@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken'); // импортируем модуль json
 const User = require('../models/user');
 const errorMessages = require('../utils/errorMessages.js');
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 const {
   NotFoundErr, ConflictErr, BadRequestErr,
 } = require('../errors/index');
@@ -33,7 +33,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ _id: user.id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '1h' });
       return res.send({ token });
     })
     .catch(next);
