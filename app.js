@@ -6,7 +6,7 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
-const {PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
+const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
 
 const routes = require('./routes/index');
 const limiter = require('./middlwares/limiter');
@@ -31,7 +31,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect( NODE_ENV === 'production' ? MONGO_URL : mongoDev, {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : mongoDev, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

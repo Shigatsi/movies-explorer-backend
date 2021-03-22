@@ -51,9 +51,7 @@ const deleteMovieById = (req, res, next) => {
         throw new ForbidenErr(errorMessages[403].film);
       }
       Movie.deleteOne(movie)
-      .then(()=> {
-        return res.send({ data: movie });
-      })
+        .then(() => res.send({ data: movie }));
     })
     .catch(next);
 };

@@ -41,7 +41,6 @@ const validateUpdateUser = celebrate({
   })),
 });
 
-
 const validateUser = celebrate({
   body: Joi.object().keys(({
     name: Joi.string().min(2).max(30).messages({
@@ -75,7 +74,7 @@ const validateMovie = celebrate({
 });
 
 const validateDeleteMovie = celebrate({
-  body: Joi.object().keys(({
+  params: Joi.object().keys(({
     movieId: Joi.string().required().hex().length(24),
   })),
 });
@@ -85,5 +84,5 @@ module.exports = {
   validateUpdateUser,
   validateUser,
   validateMovie,
-  validateDeleteMovie
+  validateDeleteMovie,
 };

@@ -7,4 +7,4 @@ module.exports.allowedCors = [
 
 ];
 
-module.exports.mongoDev = 'mongodb://localhost:27017/bitfilmsdb'
+module.exports.mongoDev = 'mongodb://localhost:27017/bitfilmsdb';
