@@ -7,6 +7,7 @@
     "test": "npm test",
     "start": "node app.js",
     "dev": "nodemon app.js",
+    "env": "scp -r ./.env shigatsi@178.154.249.123:/home/shigatsi/movie-explorer/movies-explorer-backend",
     "lint": "eslint .",
     "fix": "eslint --fix --ext .js,.jsx ."
   },
