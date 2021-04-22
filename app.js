@@ -21,8 +21,14 @@ app.use((req, res, next) => {
   if (allowedCors.includes(origin)) {
     // Проверяем, что значение origin есть среди разрешённых доменов
     res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept',
+    );
+    res.header(
+      'Access-Control-Allow-Methods',
+      'GET,HEAD,PUT,PATCH,POST,DELETE',
+    );
   }
   next();
 });
@@ -44,6 +50,4 @@ app.use(routes);
 app.use(errorLogger);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`app run PORT ${PORT}`)
-});
+app.listen(PORT, () => {});
