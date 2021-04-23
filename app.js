@@ -46,7 +46,7 @@ mongoose.connect(NODE_ENV === "production" ? MONGO_URL : mongoDev, {
 
 app.use(requestLogger);
 app.use(limiter);
-app.use(routes);
+app.use("/", routes);
 app.use(errorLogger);
 app.use(errorHandler);
 
