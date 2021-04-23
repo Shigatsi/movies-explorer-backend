@@ -6,7 +6,7 @@ const helmet = require("helmet");
 require("dotenv").config();
 
 const app = express();
-const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
+const { PORT = 3001, MONGO_URL, NODE_ENV } = process.env;
 
 const routes = require("./routes/index");
 const limiter = require("./middlwares/limiter");
@@ -50,4 +50,6 @@ app.use(routes);
 app.use(errorLogger);
 app.use(errorHandler);
 
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+  console.log(`app run ${PORT}`);
+});

@@ -1,12 +1,10 @@
-const bcrypt = require('bcryptjs'); // импортируем bcrypt
-const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
-const User = require('../models/user');
-const errorMessages = require('../utils/errorMessages.js');
+const bcrypt = require("bcryptjs"); // импортируем bcrypt
+const jwt = require("jsonwebtoken"); // импортируем модуль jsonwebtoken
+const User = require("../models/user");
+const errorMessages = require("../utils/errorMessages.js");
 
 const { JWT_SECRET, NODE_ENV } = process.env;
-const {
-  NotFoundErr, ConflictErr, BadRequestErr,
-} = require('../errors/index');
+const { NotFoundErr, ConflictErr, BadRequestErr } = require("../errors/index");
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
@@ -17,14 +15,19 @@ const createUser = (req, res, next) => {
       }
       return bcrypt.hash(password, 10);
     })
-    .then((hash) => User.create({
-      email,
-      name,
-      password: hash,
-    }))
-    .then(() => res.send({
-      email, name,
-    }))
+    .then((hash) =>
+      User.create({
+        email,
+        name,
+        password: hash,
+      })
+    )
+    .then(() =>
+      res.send({
+        email,
+        name,
+      })
+    )
     .catch(next);
 };
 
@@ -33,7 +36,11 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user.id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '1h' });
+      const token = jwt.sign(
+        { _id: user.id },
+        NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
+        { expiresIn: "1h" }
+      );
       return res.send({ token });
     })
     .catch(next);
@@ -52,7 +59,11 @@ const getCurrentUser = (req, res, next) => {
 
 const updateUserProfile = (req, res, next) => {
   const { name, email } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(
+    req.user._id,
+    { name, email },
+    { new: true, runValidators: true }
+  )
     .then((user) => {
       if (name && email) {
         return res.send({ data: user });
