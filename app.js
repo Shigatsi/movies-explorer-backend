@@ -6,7 +6,7 @@ const helmet = require("helmet");
 require("dotenv").config();
 
 const app = express();
-const { PORT = 3001, MONGO_URL, NODE_ENV } = process.env;
+const { MONGO_URL, NODE_ENV } = process.env; // PORT,
 
 const routes = require("./routes/index");
 const limiter = require("./middlwares/limiter");
@@ -50,6 +50,6 @@ app.use(routes);
 app.use(errorLogger);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`app run ${PORT}`);
+app.listen(NODE_ENV === "production" ? 3001 : 3000, () => {
+  console.log(`app run`);
 });
