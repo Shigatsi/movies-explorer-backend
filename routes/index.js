@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const loginRouter = require("./login");
 const registerRouter = require("./register");
 const userRoutes = require("./user");

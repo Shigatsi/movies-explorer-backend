@@ -6,9 +6,9 @@ const helmet = require("helmet");
 require("dotenv").config();
 
 const app = express();
-const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env; // PORT,
+const { PORT = 3000, MONGO_URL, NODE_ENV } = process.env;
 
-const routes = require("./routes/index");
+const routes = require("./routes");
 const limiter = require("./middlwares/limiter");
 const errorHandler = require("./middlwares/errorHandler");
 const { requestLogger, errorLogger } = require("./middlwares/logger");
